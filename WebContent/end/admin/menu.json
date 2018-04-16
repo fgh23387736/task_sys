@@ -1,0 +1,74 @@
+{
+    "data": [
+        {
+            "menuId": "1", 
+            "menuName": "总目录", 
+            "menuIcon": "fa-cog", 
+            "menuHref": "", 
+            "parentMenuId": "0"
+        }, 
+        {
+            "menuId": "home", 
+            "menuName": "首页", 
+            "menuIcon": "&#xe68e;", 
+            "menuHref": "views/home/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "task", 
+            "menuName": "任务管理", 
+            "menuIcon": "&#xe62a;", 
+            "menuHref": "", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "taskList", 
+            "menuName": "任务列表", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/task/index.html", 
+            "parentMenuId": "task"
+        },
+        {
+            "menuId": "cancelApply", 
+            "menuName": "取消任务申请", 
+            "menuIcon": "&#xe60a;", 
+            "menuHref": "views/cancelApply/index.html", 
+            "parentMenuId": "task"
+        },
+        {
+            "menuId": "user", 
+            "menuName": "人员管理", 
+            "menuIcon": "&#xe613;", 
+            "menuHref": "views/user/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "notice", 
+            "menuName": "公告管理", 
+            "menuIcon": "fa-sticky-note", 
+            "menuHref": "views/notice/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "systemTransferRecord", 
+            "menuName": "系统交易记录", 
+            "menuIcon": "fa-credit-card-alt", 
+            "menuHref": "views/systemTranferRecord/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "privateMessage", 
+            "menuName": "私信管理", 
+            "menuIcon": "fa-envelope-o", 
+            "menuHref": "views/privateMessage/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "personalInformation", 
+            "menuName": "个人中心", 
+            "menuIcon": "fa fa-user-circle", 
+            "menuHref": "views/personalInformation/index.html", 
+            "parentMenuId": "1"
+        }
+    ]
+}

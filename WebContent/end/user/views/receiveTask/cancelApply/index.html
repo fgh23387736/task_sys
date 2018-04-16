@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="text/html;charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/task_sys/assets/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/task_sys/assets/css/fs.css" media="all"/>
+	<script type="text/javascript" src="/task_sys/assets/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/task_sys/assets/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/task_sys/assets/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/task_sys/assets/plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/task_sys/assets/plugins/frame/js/frame.js?v=1.5.0"></script>
+</head>
+<body>
+   <div class="layui-fluid">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+<div class="layui-form-query">
+<form class="layui-form" id="query_form">
+	<div class="layui-form-item">
+		<input type="hidden" name="keys" autocomplete="off" class="layui-input" value=""/>
+		<div class="layui-inline">
+			<label class="layui-form-mid">任务Id：</label>
+			<div class="layui-input-inline" style="width: 100px;">
+				<input type="text" name="task" autocomplete="off" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-mid">处理类型：</label>
+			<div class="layui-input-inline" style="width: 100px;">
+				<select name="type" lay-verify="">
+				  <option value="-1">所有</option>
+				  <option value="0">未处理</option>
+				  <option value="1">确认</option>
+				  <option value="2">拒绝</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+  	 </div>
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-row grid-demo">
+	      <div class="layui-col-md3">
+			<button class="layui-btn" function="refresh">
+			  <i class="layui-icon">&#x1002;</i>刷新
+			</button>
+	      </div>
+	      <div class="layui-col-md12">
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/task_sys/actions/cancelApply_getByTaskAndTypeForReceiveUser.action" isPage="1" defaultForm="query_form" height="full-130"></table>
+
+	         <div class="fsDatagridCols">
+	         	<!-- <p type="numbers" title="#"/> -->
+				<p checkbox="true"/>
+			    <p field="cancelApplyId" title="ID" width="100" sort="true"/>
+			    <p field="type" title="状态" width="10%" sort="true" templet="#typeTpl" />
+			    <p field="taskId" title="任务Id" width="10%" sort="true" templet="#taskIdTpl" />
+			    <p field="taskName" title="任务名称" width="150" templet="#taskNameTpl"/>
+			    <p field="applyType" title="发起人类型" width="150" templet="#applyTypeTpl"/>
+			    <p field="reason" title="申请原因" width="150" />
+			    <p field="time" title="申请时间" width="150" />
+			    <p field="dealType" title="处理人类型" width="150" templet="#dealTypeTpl"/>
+			    <p field="dealTime" title="处理时间" width="150" />
+			    <p field="dealReason" title="处理原因" width="150" />
+			    <p field="adminId" title="操作管理员Id" width="150" templet="#adminIdTpl"/>
+			    <p field="adminName" title="操作管理员姓名" width="150" templet="#adminNameTpl"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="180"/>
+			</div>
+			<script type="text/html" id="typeTpl">
+				{{#
+					if(d.type == 0){
+				}}
+						<span class="layui-badge layui-bg-blue">未处理</span>
+				{{#
+					}else if(d.type == 1){
+				}}
+						<span class="layui-badge layui-bg-green">同意</span>
+				{{#
+					}else if(d.type == 2){
+				}}
+						<span class="layui-badge">拒绝</span>
+				{{#
+					}else{
+				}}
+						<span class="layui-badge layui-bg-gray">未知</span>
+				{{#
+					}
+				}}
+			</script>
+			<script type="text/html" id="taskIdTpl">
+				{{d.task.taskId}}
+			</script>
+			<script type="text/html" id="taskNameTpl">
+				{{d.task.name}}
+			</script>
+			<script type="text/html" id="applyTypeTpl">
+				{{#
+					if(d.applyType == 0){
+				}}
+						<span class="layui-badge layui-bg-blue">任务发起方</span>
+				{{#
+					}else if(d.applyType == 1){
+				}}
+						<span class="layui-badge layui-bg-gree">任务接收方</span>
+				{{#
+					}else{
+				}}
+						<span class="layui-badge layui-bg-gray">未知</span>
+				{{#
+					}
+				}}
+			</script>
+			<script type="text/html" id="dealTypeTpl">
+				{{#
+					if(d.dealType == 0){
+				}}
+						<span class="layui-badge layui-bg-oranage">管理员</span>
+				{{#
+					}else if(d.dealType == 1){
+				}}
+						<span class="layui-badge layui-bg-gree">任务接收方</span>
+				{{#
+					}else if(d.dealType == 2){
+				}}
+						<span class="layui-badge layui-bg-blue">任务发布放</span>
+				{{#
+					}else{
+				}}
+						<span class="layui-badge layui-bg-gray">未知</span>
+				{{#
+					}
+				}}
+			</script>
+			<script type="text/html" id="adminIdTpl">
+				{{# if(d.admin != null) { }}
+					{{d.admin.adminId}}
+				{{# } }}
+			</script>
+			<script type="text/html" id="adminNameTpl">
+				{{# if(d.admin != null) { }}
+					{{d.admin.name}}
+				{{# } }}
+				
+			</script>
+			<script type="text/html" id="barDemo">
+				{{#
+					if(d.type == 0 && d.applyType == 0){
+				}}
+						<a class="layui-btn layui-btn-xs"  onclick="agree({{d.cancelApplyId}})">同意</a>
+						<a class="layui-btn layui-btn-xs layui-btn-danger"  onclick="refuse({{d.cancelApplyId}})">拒绝</a>
+				{{#
+					}else if(d.type == 1 && d.applyType == 0){
+				}}
+						<a class="layui-btn layui-btn-xs layui-btn-disabled"   disabled>同意</a>
+						<a class="layui-btn layui-btn-xs layui-btn-disabled"   disabled>拒绝</a>
+				{{#
+					}else if(d.type == 2 && d.applyType == 0){
+				}}
+						<a class="layui-btn layui-btn-xs"  onclick="agree({{d.cancelApplyId}})">同意</a>
+						<a class="layui-btn layui-btn-xs layui-btn-disabled"   disabled>拒绝</a>
+				{{#
+					}else{
+				}}
+						<a class="layui-btn layui-btn-xs layui-btn-disabled"  disabled>同意</a>
+						<a class="layui-btn layui-btn-xs layui-btn-disabled"  disabled>拒绝</a>
+				{{#
+					}
+				}}
+			</script>
+	      </div>
+	    </div>
+
+  	 </div>
+
+  </div>
+</div>
+</body>
+</html>
+<div id="chose-time" style="width: 500px;margin-top: 10px;display: none;">
+  <div class="layui-inline">
+	    <label class="layui-form-label">原因</label>
+	    <div class="layui-input-inline" style="width: 350px;">
+	      	 <textarea name="reason" placeholder="请输入原因" class="layui-textarea"></textarea>
+	    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	layui.use(['layer','laydate'],function () {
+
+		var layer = layui.layer;
+		window.agree = function (cancelApplyId){
+			$("#chose-time textarea[name='reason']").val("");
+			layer.open({
+				type: 1, 
+				area: ['500px', '250px'],
+				title:"处理原因",
+				content: $('#chose-time'),
+				btn: ['确定'],
+				yes: function(index, layero){
+					var theReason = $("#chose-time textarea[name='reason']").val();
+					if(theReason == ""){
+						layer.msg("输入原因", {
+						      icon: 5
+						  	});
+					}else{
+						layer.load(2);
+						$.ajax({
+					        url: '/task_sys/actions/cancelApply_agree.action',
+					        type: 'POST',
+					        dataType: 'json',
+					        data: {
+					        	cancelApplyId:cancelApplyId,
+			    				dealReason:theReason
+					        },
+					        success: function(data) {
+					          	layer.closeAll('loading');
+					          	layer.msg("修改成功", {
+							      icon: 6
+							  	});
+							  	layer.close(index);
+					          	$('button[function="refresh"]').click();
+					          
+					        },
+					        error: function(data) {
+					        	layer.closeAll('loading');
+								if(data.responseJSON != undefined) {
+									layer.msg(data.responseJSON.error, {
+								      icon: 5
+								  	});
+								}else{
+									layer.msg("系统错误", {
+								      icon: 5
+								  	});
+								}
+					        }
+					    });
+					}
+				}
+			})
+		}
+		
+		window.refuse = function (cancelApplyId){
+			$("#chose-time textarea[name='reason']").val("");
+			layer.open({
+				type: 1, 
+				area: ['500px', '250px'],
+				title:"处理原因",
+				content: $('#chose-time'),
+				btn: ['确定'],
+				yes: function(index, layero){
+					var theReason = $("#chose-time textarea[name='reason']").val();
+					if(theReason == ""){
+						layer.msg("输入原因", {
+						      icon: 5
+						  	});
+					}else{
+						layer.load(2);
+						$.ajax({
+					        url: '/task_sys/actions/cancelApply_refuse.action',
+					        type: 'POST',
+					        dataType: 'json',
+					        data: {
+					        	cancelApplyId:cancelApplyId,
+			    				dealReason:theReason
+					        },
+					        success: function(data) {
+					          	layer.closeAll('loading');
+					          	layer.msg("修改成功", {
+							      icon: 6
+							  	});
+							  	layer.close(index);
+					          	$('button[function="refresh"]').click();
+					          
+					        },
+					        error: function(data) {
+					        	layer.closeAll('loading');
+								if(data.responseJSON != undefined) {
+									layer.msg(data.responseJSON.error, {
+								      icon: 5
+								  	});
+								}else{
+									layer.msg("系统错误", {
+								      icon: 5
+								  	});
+								}
+					        }
+					    });
+					}
+				}
+			})
+		}
+		
+	});
+	
+</script>

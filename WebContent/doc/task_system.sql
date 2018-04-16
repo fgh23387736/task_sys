@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : utf-8
 
- Date: 02/12/2018 17:18:52 PM
+ Date: 03/12/2018 11:08:20 AM
 */
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -30,10 +30,10 @@ CREATE TABLE `ts_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Table structure for `ts_cancel_applay`
+--  Table structure for `ts_cancel_apply`
 -- ----------------------------
-DROP TABLE IF EXISTS `ts_cancel_applay`;
-CREATE TABLE `ts_cancel_applay` (
+DROP TABLE IF EXISTS `ts_cancel_apply`;
+CREATE TABLE `ts_cancel_apply` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
   `task_id` int(8) NOT NULL,
   `apply_type` int(1) NOT NULL,
@@ -47,8 +47,8 @@ CREATE TABLE `ts_cancel_applay` (
   PRIMARY KEY (`id`),
   KEY `task_id` (`task_id`),
   KEY `admin_id` (`admin_id`),
-  CONSTRAINT `ts_cancel_applay_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `ts_task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ts_cancel_applay_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `ts_admin` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `ts_cancel_apply_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `ts_task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ts_cancel_apply_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `ts_admin` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

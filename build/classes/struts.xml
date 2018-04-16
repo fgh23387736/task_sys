@@ -4,11 +4,29 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="demo1" extends="struts-default" namespace="/actions">
-		<action name="user_*" class="userAction" method="{1}">
-			<result name="signOut" type="dispatcher">/end/login/login.jsp</result>
+		<action name="special_*" class="specialAction" method="{1}">
+			<!-- <result name="downloadFile" type="stream">   定义返回值为流
+	            <param name="contentType">application/octet-stream</param>  返回文件类型
+	            <param name="inputName">inputStream</param>  方法内部使用的流的名称
+	            文件下载的处理方式 
+	            <param name="contentDisposition">attachment;filename="${fileName}"</param>    
+	            <param name="bufferSize">2048</param>  下载缓冲区的大小
+	        </result>  -->
 		</action>
-	</package>
-	
+		<action name="user_*" class="userAction" method="{1}"></action>
+		<action name="admin_*" class="adminAction" method="{1}"></action>
+		<action name="cancelApply_*" class="cancelApplyAction" method="{1}"></action>
+		<action name="envaluate_*" class="envaluateAction" method="{1}"></action>
+		<action name="internalTransferRecord_*" class="internalTransferRecordAction" method="{1}"></action>
+		<action name="notice_*" class="noticeAction" method="{1}"></action>
+		<action name="privateMessage_*" class="privateMessageAction" method="{1}"></action>
+		<action name="suspendedRecord_*" class="suspendedRecordAction" method="{1}"></action>
+		<action name="systemTransferRecord_*" class="systemTransferRecordAction" method="{1}"></action>
+		<action name="task_*" class="taskAction" method="{1}"></action>
+		<action name="webSocket_*" class="webSocketAction" method="{1}"></action>
+		<action name="im_*" class="imAction" method="{1}"></action>
+	</package>	
+	<constant name="struts.action.excludePattern" value="/websocket"></constant>
 	<constant name="struts.custom.i18n.resources" value="Mess"></constant>
 	<constant name="struts.multipart.maxSize" value="104857600"></constant>
 </struts>

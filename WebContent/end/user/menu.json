@@ -1,0 +1,139 @@
+{
+    "data": [
+        {
+            "menuId": "1", 
+            "menuName": "总目录", 
+            "menuIcon": "fa-cog", 
+            "menuHref": "", 
+            "parentMenuId": "0"
+        }, 
+        {
+            "menuId": "home", 
+            "menuName": "首页", 
+            "menuIcon": "&#xe68e;", 
+            "menuHref": "views/home/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "releaseTask", 
+            "menuName": "我发布的任务", 
+            "menuIcon": "&#xe62a;", 
+            "menuHref": "", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "receiveTask", 
+            "menuName": "我接受的任务", 
+            "menuIcon": "&#xe62a;", 
+            "menuHref": "", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "release-taskList", 
+            "menuName": "任务列表", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/taskList/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        {
+            "menuId": "release-notReceiveTask", 
+            "menuName": "待接受", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/notReceiveTask/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        {
+            "menuId": "release-notConfirmTask", 
+            "menuName": "待确认", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/notConfirmTask/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        {
+            "menuId": "release-finishedTask", 
+            "menuName": "已完成", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/finishedTask/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        {
+            "menuId": "release-cancelTask", 
+            "menuName": "已取消", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/cancelTask/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        {
+            "menuId": "release-cancelApply", 
+            "menuName": "取消任务申请", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/releaseTask/cancelApply/index.html", 
+            "parentMenuId": "releaseTask"
+        },
+        
+        {
+            "menuId": "receive-taskList", 
+            "menuName": "任务列表", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/receiveTask/taskList/index.html", 
+            "parentMenuId": "receiveTask"
+        },
+        {
+            "menuId": "receive-notConfirmTask", 
+            "menuName": "待确认", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/receiveTask/notConfirmTask/index.html", 
+            "parentMenuId": "receiveTask"
+        },
+        {
+            "menuId": "receive-finishedTask", 
+            "menuName": "已完成", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/receiveTask/finishedTask/index.html", 
+            "parentMenuId": "receiveTask"
+        },
+         {
+            "menuId": "receive-cancelTask", 
+            "menuName": "已取消", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/receiveTask/cancelTask/index.html", 
+            "parentMenuId": "receiveTask"
+        },
+        {
+            "menuId": "receive-cancelApply", 
+            "menuName": "取消任务申请", 
+            "menuIcon": "&#xe63c;", 
+            "menuHref": "views/receiveTask/cancelApply/index.html", 
+            "parentMenuId": "receiveTask"
+        },
+        
+        {
+            "menuId": "notice", 
+            "menuName": "公告", 
+            "menuIcon": "fa-sticky-note", 
+            "menuHref": "views/notice/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "systemTransferRecord", 
+            "menuName": "系统交易记录", 
+            "menuIcon": "fa-credit-card-alt", 
+            "menuHref": "views/systemTranferRecord/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "privateMessage", 
+            "menuName": "私信", 
+            "menuIcon": "fa-envelope-o", 
+            "menuHref": "views/privateMessage/index.html", 
+            "parentMenuId": "1"
+        },
+        {
+            "menuId": "personalInformation", 
+            "menuName": "个人中心", 
+            "menuIcon": "fa fa-user-circle", 
+            "menuHref": "views/personalInformation/index.html", 
+            "parentMenuId": "1"
+        }
+    ]
+}
