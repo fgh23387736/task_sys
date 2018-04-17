@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +93,7 @@ public class NoticeDaoImpl implements NoticeDao {
 			notice.setTitle("");
 		}
 		criteria.add(Property.forName("title").like( "%"+notice.getTitle()+"%" ) );
+		criteria.addOrder(Order.desc("time"));
 		return criteria;
 	}
 	

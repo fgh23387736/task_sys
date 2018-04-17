@@ -3,7 +3,11 @@ webSocket.binaryType = 'arraybuffer'
 webSocket.onerror = function(event) {};
 
 webSocket.onclose = function(event) {
-    alert("链接关闭")
+	layer.msg('您已与服务器断开即时链接，请刷新页面重连', {
+        time: 20000, //20s后自动关闭
+        btn: ['确定']
+      });
+    
 };
 
 webSocket.onopen = function(event) {
