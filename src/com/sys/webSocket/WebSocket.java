@@ -46,8 +46,9 @@ public class WebSocket {
 	
 	private ChatRecordService chatRecordService = null;
 	private User loginUser = null;
+	private Admin loginAdmin = null;
 
-	public static void sendByWebSocket(Integer[] receivers, String type, Admin sendAdmin,User sendUser,Object content,User loginUser) {
+	public static void sendByWebSocket(Integer[] receivers, String type, Admin sendAdmin,User sendUser,Object content,User loginUser,Admin loginAdmin) {
 		Integer typeIndex = null;
 		switch (type) {
 		case "newNotice":
@@ -79,6 +80,9 @@ public class WebSocket {
 						if(loginUser != null && loginUser.getUserId() != entry.getKey()){
 							entry.getValue().getBasicRemote()
 							.sendText(JSON.toJSONString(webSocketMap));
+						}else if(loginAdmin != null){
+							entry.getValue().getBasicRemote()
+							.sendText(JSON.toJSONString(webSocketMap));
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -91,6 +95,9 @@ public class WebSocket {
 						try {
 							if(loginUser != null && loginUser.getUserId() != integer){
 								userSessions.get(integer).getBasicRemote().sendText(JSON.toJSONString(webSocketMap));
+							}else if(loginAdmin != null){
+								userSessions.get(integer).getBasicRemote()
+								.sendText(JSON.toJSONString(webSocketMap));
 							}
 							
 						} catch (IOException e) {
@@ -116,6 +123,7 @@ public class WebSocket {
 				HttpSession.class.getName());
 		if (httpSession != null) {
 			this.loginUser = (User) httpSession.getAttribute("user"); // 如果已经登录,在别的action中已经将一个user对象存入session中,此处直接取出
+			this.loginAdmin = (Admin) httpSession.getAttribute("admin");
 			ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(httpSession.getServletContext());
     		this.chatRecordService = (ChatRecordService)ctx.getBean("chatRecordService");
 			if (loginUser != null) {

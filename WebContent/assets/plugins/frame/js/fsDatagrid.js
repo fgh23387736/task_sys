@@ -140,7 +140,6 @@ layui.define(["fsCommon", "table", 'laypage', 'fsConfig', 'form', "element"], fu
 
         thisDatagrid.formatDataQuery(datagridCols["formatArr"]);
         var theParm = fsCommon.getParameterListFromUrl();
-        console.log(theParm);
         for (var i in theParm) { //用javascript的for/in循环遍历对象的属性 
             formData[i] = theParm[i];
         }

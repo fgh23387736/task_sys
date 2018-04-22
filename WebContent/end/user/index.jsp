@@ -149,12 +149,12 @@
 <div id="task-box" style="display:none;background: white; width: 400px;padding:10px;font-family: '微软雅黑';">
   <div style="height:104px;">
     <div style="float: left;border-radius: 3px;border: 2px solid rgba(0,0,0,0.5);margin-right: 3px;">
-      <img src="/task_sys/assets/images/100.jpg" width="100" height="100">
+      <img src="" width="100" height="100" id="task-box-headImg">
     </div>
     <div style="float: left;width: 292px;height:100%;">
       <table class="layui-table" lay-skin="row" lay-even style="margin:0px;height:100%;width:100%;">
-        <tr><td>报酬</td><td>10</td></tr>
-        <tr><td>地址</td><td>哈工大十公寓</td></tr>
+        <tr><td>报酬</td><td id="task-box-money"></td></tr>
+        <tr><td>地址</td><td id="task-box-address"></td></tr>
       </table>
     </div>
   </div>
@@ -164,9 +164,9 @@
      <table class="layui-table" lay-skin="row" lay-even>
         <tr>
           <td width="30">任务</td>
-          <td>这是一个题目这是一个题目这是一个题目这是一个题目这是一个题目这是一个题目这是一个题目这是一个题目这是一个题目</td>
+          <td id="task-box-name"></td>
         </tr>
-        <tr><td>描述</td><td>我要买个包子</td></tr>
+        <tr><td>描述</td><td id="task-box-content"></td></tr>
      </table>
   </div>
 </div>

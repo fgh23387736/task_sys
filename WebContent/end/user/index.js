@@ -1,4 +1,4 @@
-var webSocket = new WebSocket('ws://localhost:8080/task_sys/websocket/web');
+var webSocket = new WebSocket('ws://10.236.179.31:8080/task_sys/websocket/web');
 webSocket.binaryType = 'arraybuffer'
 webSocket.onerror = function(event) {};
 
@@ -15,6 +15,7 @@ webSocket.onopen = function(event) {
 };
 webSocket.onmessage = function(event) {
     var data = JSON.parse(event.data);
+    console.log(data);
     if (data['type'] == "chatMessage") {
         window.getMessage(data['data']);
     } else {
@@ -154,6 +155,11 @@ layui.use(['layer', "layim"], function() {
             yesButton = "接单";
             content = $("#task-box");
             area = ["420px", "310px"]
+            $('#task-box-headImg').attr("src",data['content']['releaseUser']["headImg"]);
+            $('#task-box-address').html(data['content']['address']);
+            $('#task-box-name').html(data['content']['name']);
+            $('#task-box-money').html(data['content']['price']);
+            $('#task-box-content').html(data['content']['content']);
             yesFunction = function() {
                 layer.load(2);
                 $.ajax({

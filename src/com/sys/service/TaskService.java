@@ -210,8 +210,12 @@ public class TaskService {
 			releaseUserMap.put("goodEnvaluateNumber", theUser.getGoodEnvaluateNumber());
 			releaseUserMap.put("middleEnvaluateNumber", theUser.getMiddleEnvaluateNumber());
 			releaseUserMap.put("badEnvaluateNumber", theUser.getBadEnvaluateNumber());
+			if(theUser.getHeadImg() == null || theUser.getHeadImg() == ""){
+				theUser.setHeadImg("/task_sys/assets/images/100.jpg");
+			}
+			releaseUserMap.put("headImg", theUser.getHeadImg());
 			contentMap.put("releaseUser", releaseUserMap);
-			WebSocket.sendByWebSocket(null, "newTask", null, task.getReleaseUser(), contentMap,loginUser);
+			WebSocket.sendByWebSocket(null, "newTask", null, task.getReleaseUser(), contentMap,loginUser,null);
 		}
 		return task;
 		

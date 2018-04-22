@@ -90,7 +90,7 @@ public class UserService {
 			return user.getMoney();
 		case "headImg":
 			if(user.getHeadImg() == "" || user.getHeadImg() == null){
-				return "/task_sys/assets/images/100.jpg/";
+				return "/task_sys/assets/images/100.jpg";
 			}
 			return user.getHeadImg();
 		case "goodEnvaluateNumber":

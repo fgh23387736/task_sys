@@ -118,7 +118,7 @@ public class PrivateMessageService {
 			contentMap.put("privateMessageId", privateMessage.getPrivateMessageId());
 			contentMap.put("time", privateMessage.getTime());
 			contentMap.put("title", privateMessage.getTitle());
-			WebSocket.sendByWebSocket(null, "newPrivateMessage", loginAdmin, null, contentMap,null);
+			WebSocket.sendByWebSocket(null, "newPrivateMessage", loginAdmin, null, contentMap,null,loginAdmin);
 		}
 		return privateMessage;
 		

@@ -107,7 +107,7 @@ public class NoticeService {
 			contentMap.put("noticeId", notice.getNoticeId());
 			contentMap.put("time", notice.getTime());
 			contentMap.put("title", notice.getTitle());
-			WebSocket.sendByWebSocket(null, "newNotice", loginAdmin, null, contentMap,null);
+			WebSocket.sendByWebSocket(null, "newNotice", loginAdmin, null, contentMap,null,loginAdmin);
 		}
 		return notice;
 		
