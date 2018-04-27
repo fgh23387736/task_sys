@@ -170,4 +170,5 @@
      </table>
   </div>
 </div>
+<script type="text/javascript" src="/task_sys/assets/plugins/config.js"></script>
 <script type="text/javascript" src="index.js"></script>

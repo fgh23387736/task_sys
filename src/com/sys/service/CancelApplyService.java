@@ -1,6 +1,7 @@
 package com.sys.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -252,6 +253,10 @@ public class CancelApplyService {
 		DetachedCriteria criteria = cancelApplyDao.getCriteriaByTaskAndTypeForReceiveUser(cancelApply,user);
 		Map<String, Object> map = getMapByKeysAndPage(keys,page,pageSize,criteria);
 		return map;
+	}
+	
+	public int getCancelApplyNumberByUserAndTime(User user,Date startDate,Date endDate){
+		return  cancelApplyDao.getAllCountByCriteria(cancelApplyDao.getCriteriaByByUserAndTime(user,startDate,endDate));
 	}
 
 }

@@ -76,6 +76,7 @@ public class SpecialAction extends ActionSupport{
 		User loginUser = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
 		Admin loginAdmin = (Admin)ServletActionContext.getRequest().getSession().getAttribute("admin");
 		String loginType = (String)ServletActionContext.getRequest().getSession().getAttribute("type");
+		String url = ServletActionContext.getRequest().getHeader("Referer");
 		if (loginUser == null && loginAdmin == null) {
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权获取本信息");
@@ -87,7 +88,8 @@ public class SpecialAction extends ActionSupport{
 				if(loginType.equals("admin")){
 					path = ServletActionContext.getServletContext().getRealPath("end/admin/menu.json");
 				}else{
-					path = ServletActionContext.getServletContext().getRealPath("end/user/menu.json");
+					url = url.substring(7).split("/")[2];
+					path = ServletActionContext.getServletContext().getRealPath(url+"/user/menu.json");
 				}
 				FileInputStream fileInputStream = new FileInputStream(path);
 				InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");

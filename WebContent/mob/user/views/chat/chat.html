@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="text/html;charset=UTF-8" />
+    <title>便捷校园-公告</title>
+    <meta name="keywords" content="fsLayuiPlugin,layui,layuiPlugin,layuiæä»¶,layuiå¿«éå¼åæä»¶" />
+    <meta name="description" content="fsLayuiPlugin,layui,layuiPlugin,layuiæä»¶,layuiå¿«éå¼åæä»¶" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/task_sys/assets/plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/task_sys/assets/plugins/layui/css/layui.mobile.css" media="all" />
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/task_sys/assets/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/task_sys/assets/plugins/layui/layui.js"></script>
+    <style type="text/css">
+    html,
+    body {
+        color: black;
+    }
+    </style>
+</head>
+
+<body>
+</body>
+
+</html>
+<script>
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+layui.use(["layer", "form", "mobile"], function() {
+
+    var layer = layui.layer;
+    var form = layui.form;
+    var layim = layui.mobile.layim;
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    //layer.min(theChatIndex);
+    layer.load(2);
+    $.ajax({
+        url: '/task_sys/actions/im_init.action',
+        type: 'GET',
+        dataType: 'json',
+        data: {},
+        success: function(data) {
+            layer.closeAll('loading');
+            if(data['code'] != 0){
+            	layer.msg(data.msg, { icon: 5 });
+            }
+            layim.config({
+                brief: false,
+                init: data.data,
+                title: "我的消息",
+                isgroup: false
+            });
+        },
+        error: function(data) {
+            layer.closeAll('loading');
+            if (data.responseJSON != undefined) {
+                layer.msg(data.responseJSON.error, { icon: 5 });
+            } else {
+                layer.msg("系统错误", { icon: 5 });
+            }
+        }
+    });
+    
+    layim.on('sendMessage', function(res) {
+        var mine = res.mine; //包含我发送的消息及我的信息
+        var to = res.to; //对方的信息
+        if (parent.webSocket.readyState === parent.webSocket.CLOSED) {
+            layer.msg("您已掉线，请刷新界面", { icon: 5 });
+        } else {
+        	parent.webSocket.send(JSON.stringify({
+                type: 'chatMessage' //随便定义，用于在服务端区分消息类型
+                    ,
+                data: res
+            }));
+        }
+
+
+    });
+    window.getMessage = function(data) {
+        layim.getMessage(data);
+    }
+    window.chat = function(user) {
+        layim.chat({
+            name: user.name,
+            type: 'friend',
+            avatar: user.headImg,
+            id: user.userId
+        });
+    }
+
+});
+</script>

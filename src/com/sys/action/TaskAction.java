@@ -1,6 +1,7 @@
 package com.sys.action;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sys.bean.ResponseBean;
 import com.sys.entity.Admin;
+import com.sys.entity.CancelApply;
 import com.sys.entity.Task;
 import com.sys.entity.User;
+import com.sys.service.CancelApplyService;
 import com.sys.service.TaskService;
 import com.sys.service.UserService;
 import com.sys.util.PublicUtils;
@@ -30,6 +33,9 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private CancelApplyService cancelApplyService;
+	
 	private String ids;
 	
 	private Integer page;
@@ -41,6 +47,14 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 	private Task task = new Task();
 	
 	
+	public CancelApplyService getCancelApplyService() {
+		return cancelApplyService;
+	}
+
+	public void setCancelApplyService(CancelApplyService cancelApplyService) {
+		this.cancelApplyService = cancelApplyService;
+	}
+
 	public UserService getUserService() {
 		return userService;
 	}
@@ -247,21 +261,40 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 				responseBean.setStatus(403);
 				responseBean.put("error", "您的余额不足");
 			}else{
-				task.setReleaseUser(loginUser);
-				task.setState(0);
-				task.setReleaseTime(new Date());
-				task.setReleaseIsConfirm(false);
-				task.setReleaseIsEnvaluate(false);
-				task.setReceiveIsConfirm(false);
-				task.setReceiveIsEnvaluate(false);
-				task = taskService.add(task,loginUser);
-				if(task.getTaskId() != null) {
-					responseBean.setStatus(201);
-					responseBean.put("taskId", task.getTaskId());
-				} else {
-					responseBean.put("error", "添加失败，系统错误");
-					responseBean.setStatus(500);
+				Calendar c = Calendar.getInstance();
+				// 这是已知的日期
+				Date d = new Date();
+				c.setTime(d);
+				c.set(Calendar.DAY_OF_MONTH, 1);
+				c.set(Calendar.HOUR_OF_DAY, 0);
+				c.set(Calendar.MINUTE, 0);
+				c.set(Calendar.SECOND, 0);
+				Date startDate = c.getTime();
+				c.add(Calendar.MONTH, 1);
+				Date endDate = c.getTime();
+				
+				int cancelApplyNumber = cancelApplyService.getCancelApplyNumberByUserAndTime(loginUser, startDate, endDate);
+				if(cancelApplyNumber >= 3){
+					responseBean.put("error", "对不起您本月申请取消的次数已经累计达到3次，本月无法发布任务");
+					responseBean.setStatus(403);
+				}else{
+					task.setReleaseUser(loginUser);
+					task.setState(0);
+					task.setReleaseTime(new Date());
+					task.setReleaseIsConfirm(false);
+					task.setReleaseIsEnvaluate(false);
+					task.setReceiveIsConfirm(false);
+					task.setReceiveIsEnvaluate(false);
+					task = taskService.add(task,loginUser);
+					if(task.getTaskId() != null) {
+						responseBean.setStatus(201);
+						responseBean.put("taskId", task.getTaskId());
+					} else {
+						responseBean.put("error", "添加失败，系统错误");
+						responseBean.setStatus(500);
+					}
 				}
+				
 			}
 			
 		}

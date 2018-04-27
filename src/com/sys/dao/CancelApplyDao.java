@@ -1,5 +1,6 @@
 package com.sys.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -22,4 +23,6 @@ public interface CancelApplyDao {
 			CancelApply cancelApply, User user);
 	public DetachedCriteria getCriteriaByTaskAndTypeForReceiveUser(
 			CancelApply cancelApply, User user);
+	public DetachedCriteria getCriteriaByByUserAndTime(User user,
+			Date startDate, Date endDate);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -93,6 +94,16 @@ public class ChatRecordDaoImpl implements ChatRecordDao {
 		DetachedCriteria criteria = DetachedCriteria.forClass(ChatRecord.class);
 		criteria.add(Restrictions.or(Restrictions.eq("sendUser", user),   
                     Restrictions.eq("receiveUser", user)));
+		return criteria;
+	}
+
+	@Override
+	public DetachedCriteria getCriteriaByReceiveUserAndIsReadOrderByTime(
+			User user, boolean isRead) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(ChatRecord.class);
+		criteria.add(Property.forName("receiveUser").eq( user ) );
+		criteria.add(Property.forName("isRead").eq( isRead ) );
+		criteria.addOrder(Order.asc("time"));
 		return criteria;
 	}
 	

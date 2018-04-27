@@ -1,28 +1,31 @@
-var webSocket = new WebSocket('ws://10.236.179.31:8080/task_sys/websocket/web');
-webSocket.binaryType = 'arraybuffer'
-webSocket.onerror = function(event) {};
+var webSocket;
 
-webSocket.onclose = function(event) {
-	layer.msg('您已与服务器断开即时链接，请刷新页面重连', {
-        time: 20000, //20s后自动关闭
-        btn: ['确定']
-      });
-    
-};
+function initWebSocket() {
+    console.log("init");
+    webSocket = new WebSocket('ws://' + window.ip + '/task_sys/websocket/web');
+    webSocket.binaryType = 'arraybuffer'
+    webSocket.onerror = function(event) {};
 
-webSocket.onopen = function(event) {
-    console.log("链接关闭")
-};
-webSocket.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    console.log(data);
-    if (data['type'] == "chatMessage") {
-        window.getMessage(data['data']);
-    } else {
-        window.openRbBox(data);
-    }
+    webSocket.onclose = function(event) {
+        layer.msg('您已与服务器断开即时链接，请刷新页面重连', {
+            time: 20000, //20s后自动关闭
+            btn: ['确定']
+        });
 
-};
+    };
+
+    webSocket.onopen = function(event) {};
+    webSocket.onmessage = function(event) {
+        console.log(event.data);
+        var data = JSON.parse(event.data);
+        if (data['type'] == "chatMessage") {
+            window.getMessage(data['data']);
+        } else {
+            window.openRbBox(data);
+        }
+
+    };
+}
 
 layui.use(['layer', "layim"], function() {
     var layer = layui.layer,
@@ -54,6 +57,9 @@ layui.use(['layer', "layim"], function() {
         }
 
 
+    });
+    layim.on('ready', function(options) {
+        window.initWebSocket();
     });
     window.chat = function(user) {
         layim.chat({
@@ -155,7 +161,7 @@ layui.use(['layer', "layim"], function() {
             yesButton = "接单";
             content = $("#task-box");
             area = ["420px", "310px"]
-            $('#task-box-headImg').attr("src",data['content']['releaseUser']["headImg"]);
+            $('#task-box-headImg').attr("src", data['content']['releaseUser']["headImg"]);
             $('#task-box-address').html(data['content']['address']);
             $('#task-box-name').html(data['content']['name']);
             $('#task-box-money').html(data['content']['price']);

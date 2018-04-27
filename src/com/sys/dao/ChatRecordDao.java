@@ -18,4 +18,6 @@ public interface ChatRecordDao {
 	public DetachedCriteria getCriteriaByIds(Integer[] ids);
 	public DetachedCriteria getCriteriaForAll();
 	public DetachedCriteria getCriteriaForChatUserListByUser(User user);
+	public DetachedCriteria getCriteriaByReceiveUserAndIsReadOrderByTime(
+			User loginUser, boolean b);
 }

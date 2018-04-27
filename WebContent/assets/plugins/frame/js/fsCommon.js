@@ -93,7 +93,6 @@ layui.define(['layer', 'form', 'fsConfig'], function(exports) {
                 data: param,
                 dataType: "json",
                 success: function(result, te, status) {
-                    console.log(status);
                     if (status.status == 204) {
                         result = {}
                     }

@@ -1,6 +1,7 @@
 package com.sys.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -137,6 +138,20 @@ public class CancelApplyDaoImpl implements CancelApplyDao {
 		}
 		criteria.add(Property.forName("task").in( taskCriteria ) );
 		
+		return criteria;
+	}
+
+	@Override
+	public DetachedCriteria getCriteriaByByUserAndTime(User user,
+			Date startDate, Date endDate) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(CancelApply.class);
+		DetachedCriteria taskCriteria = DetachedCriteria.forClass(Task.class);
+		taskCriteria.add(Property.forName("releaseUser").eq(user));
+		
+		taskCriteria.setProjection(Property.forName("taskId")); 
+		criteria.add(Property.forName("task").in( taskCriteria ) );
+		criteria.add(Property.forName("time").ge( startDate ) );
+		criteria.add(Property.forName("time").lt( endDate ) );
 		return criteria;
 	}
 	

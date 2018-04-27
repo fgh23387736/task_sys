@@ -1,5 +1,6 @@
 package com.sys.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.sys.dao.ChatRecordDao;
 import com.sys.dao.UserDao;
 import com.sys.entity.Admin;
@@ -263,6 +265,44 @@ public class ChatRecordService {
 			
 		}
 		return userLists;
+	}
+
+	public void sendOldMessageNotReadForLoginUser(User loginUser) {
+		// TODO Auto-generated method stub
+		DetachedCriteria criteria = chatRecordDao.getCriteriaByReceiveUserAndIsReadOrderByTime(loginUser,false);
+		List<ChatRecord> chatRecords = chatRecordDao.getDataByCriteria(null, null, criteria);
+		for (ChatRecord chatRecord : chatRecords) {
+			if(WebSocket.userSessions.containsKey(loginUser.getUserId())){
+				
+				 Map<String, Object> chatMessageMap = new HashMap<>();
+				 chatMessageMap.put("username", chatRecord.getSendUser().getName());
+				 if(chatRecord.getSendUser().getHeadImg() == null || chatRecord.getSendUser().getHeadImg() == ""){
+					 chatMessageMap.put("avatar", "/task_sys/assets/images/100.jpg");
+				 }else{
+					 chatMessageMap.put("avatar", chatRecord.getSendUser().getHeadImg());
+				 }
+				 
+				 chatMessageMap.put("id", chatRecord.getSendUser().getUserId());
+				 chatMessageMap.put("type", "friend");
+				 chatMessageMap.put("content", chatRecord.getContent());
+				 chatMessageMap.put("cid", chatRecord.getChatRecordId());
+				 chatMessageMap.put("mine", false);
+				 chatMessageMap.put("fromid", chatRecord.getSendUser().getUserId());
+				 chatMessageMap.put("timestamp", chatRecord.getTime().getTime());
+				 
+				 Map<String, Object> returnMap = new HashMap<>();
+				 returnMap.put("type", "chatMessage");
+				 returnMap.put("data", chatMessageMap);
+				 try {
+					WebSocket.userSessions.get(loginUser.getUserId()).getBasicRemote().sendText(JSON.toJSONString(returnMap));
+					chatRecord.setIsRead(true);
+					chatRecordDao.update(chatRecord);
+				 } catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 }
+		}
 	}
 
 

@@ -118,7 +118,6 @@ public class WebSocket {
 		this.httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
 		this.session = session;
 		room.addElement(session);
-		System.out.println("open:" + param);
 		this.httpSession = (HttpSession) config.getUserProperties().get(
 				HttpSession.class.getName());
 		if (httpSession != null) {
@@ -132,7 +131,8 @@ public class WebSocket {
 				}
 				userSessions.put(loginUser.getUserId(), session);
 				theParam = loginUser.getUserId();
-				System.out.println("isok");
+				
+				chatRecordService.sendOldMessageNotReadForLoginUser(loginUser);
 			} else {
 				this.session.close();
 			}
@@ -196,6 +196,8 @@ public class WebSocket {
 		 }
 
 	}
+	
+	
 
 	@OnError
 	public void onError(Throwable t) throws Throwable {
